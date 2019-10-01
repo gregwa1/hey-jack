@@ -12,14 +12,14 @@ let stayButton = document.querySelector('#stay');
 //dealing cards
 let dealCards = async (cards) => {
   let response = await axios.get(`https://deckofcardsapi.com/api/deck/${cards}/draw/?count=2`);
-  console.log(response);
+  // console.log(response.data.cards);
+  return response.data.cards;
 }
 
 //Getting deck_id
 playButton.addEventListener(`click`, async () => {
   let response = await axios.get(`https://deckofcardsapi.com/api/deck/o9z1x6oiqd0i/shuffle/?deck_count=1`);
-  // console.log(response.data.deck_id)
-  dealCards(response.data.deck_id)
+  console.log(response.data.deck_id)
+  let twoCards = await dealCards(response.data.deck_id)
+  console.log(twoCards)
 });
-
-//dealing
