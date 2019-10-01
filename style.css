@@ -1,7 +1,22 @@
 body {
-  background-image: url("https://steemitimages.com/DQmPKnH91pkB1mo4DXCQDJg9mVYJ6rDVhoZsvtgxprXqxoH/deck-cards-18354636.jpg");
+  background-image: url("https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcT5RijEavDtizPXS1VXSLFuuc92_9ggkudYblAvVx7IoAe8SV4C7_27jDvWQTHjlIzew6ie-jtv5VmOy7CjsSv6t-7mdZFXw_pX0j2M-d7H&usqp=CAE");
   margin: 0;
   background-size: cover;
   background-repeat: no-repeat;
   text-align: center;
+  height: 500px;
+  position: z -5;
 }
+#display {
+  min-height: 50vh;
+}
+
+h1 {
+  font-family: 'Grenze', serif;
+  font-size: 45px;
+}
+
+/* body {
+  display: flex;
+  justify-content: space-between;
+} */
