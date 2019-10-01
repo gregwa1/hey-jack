@@ -7,16 +7,13 @@ body {
   height: 500px;
   position: z -5;
 }
-#display {
+div#display-player {
   min-height: 50vh;
+  display: flexbox;
+
 }
 
 h1 {
   font-family: 'Grenze', serif;
   font-size: 45px;
 }
-
-/* body {
-  display: flex;
-  justify-content: space-between;
-} */
