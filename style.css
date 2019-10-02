@@ -1,10 +1,12 @@
+
+
 body {
   background-image: url("https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcT5RijEavDtizPXS1VXSLFuuc92_9ggkudYblAvVx7IoAe8SV4C7_27jDvWQTHjlIzew6ie-jtv5VmOy7CjsSv6t-7mdZFXw_pX0j2M-d7H&usqp=CAE");
   margin: 0;
   background-size: cover;
   background-repeat: no-repeat;
   text-align: center;
-  height: 500px;
+  height: 250px;
   position: z -5;
 }
 div#display-player {
@@ -13,7 +15,57 @@ div#display-player {
 
 }
 
+div#the-buttons {
+  display: flex;
+  box-sizing: content-box;
+  width: 5px;
+}
+
+button#play{
+  display: flex;
+  border-radius: 50%;
+
+}
+
+button#stay{
+  display: flex;
+  border-radius: 50%;
+}
+
 h1 {
   font-family: 'Grenze', serif;
   font-size: 45px;
+}
+
+section {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: 20% 80%;
+}
+
+#the-buttons {
+  display: grid;
+  grid-template-areas:
+  'player dealer'
+  'p-score d-score';
+}
+
+#display-player {
+  grid-area: player;
+}
+
+#display-dealer {
+  grid-area: dealer;
+}
+
+#player-points {
+  grid-area: p-score;
+}
+
+#dealer-points {
+  grid-area: d-score;
+}
+
+h3 {
+  display: none;
 }
