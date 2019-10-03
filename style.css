@@ -48,6 +48,7 @@ section {
   grid-template-areas:
   'player dealer'
   'p-score d-score';
+  
 }
 
 #display-player {

@@ -22,10 +22,27 @@ let playButton = document.querySelector('#play');
 let hitButton = document.querySelector('#hit');
 let stayButton = document.querySelector('#stay');
 
-//dealing cards
-let dealCards = async (cards) => {
+//dealing cards. Changing two ACEs to the value of 2 if drawn in same user.
+const dealCards = async (cards) => {
   let response = await axios.get(`https://deckofcardsapi.com/api/deck/${shuffleDeck}/draw/?count=4`);
-  players(response.data.cards);
+  let allCards = players(response.data.cards);
+  console.log(allCards)
+  let playerCards = [];
+  let dealerCards = [];
+  for (let i = 0; i < allCards.length; i += 1) {
+    let currentCard = allCards[i]
+    console.log(currentCard.value)
+    if (i % 2 === 0) {
+      playerCards.push(currentCard)
+      if (playerCards[0].value === "ACE" && playerCards[1] === "ACE")
+
+        changeRank(currentCard.value)
+
+    } else {
+      dealerCards.push(currentCard)
+    }
+  }
+
   titlePlayer.style = `display: block`;
   titleDealer.style = `display: block`;
 }
@@ -36,16 +53,17 @@ let titleDealer = document.querySelector("#headingDealer");
 
 playButton.addEventListener(`click`, dealCards)
 
-let changeRank = (value) => {
+
+//This function changes value of high suits to value 10.
+const changeRank = (value) => {
   if (value === "JACK" || value === "QUEEN" || value === "KING") {
-    return 10;
+    value = 10;
   } else if (value === "ACE") {
-    return 11;
-  } else if (value === "ACE" && value === "ACE") {
-    return 2;
+    value = 11;
   } else {
-    return parseInt(value);
+    value = parseInt(value);
   }
+  return value;
 }
 
 
@@ -95,7 +113,7 @@ const players = (cards) => {
     results.append(winner);
   }
 
-
+  return cards
 }
 
 getTotal = (card1, card2) => {
@@ -110,3 +128,9 @@ const determineWinner = (player1, player2) => {
   }
   return score
 }
+
+//Hit Button
+//The Player score continues by adding one random card 
+//from cards delt.If the cards exceed 21 then Bust!.
+//Player looses. If Player Player 
+//If 
