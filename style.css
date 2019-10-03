@@ -69,3 +69,7 @@ section {
 h3 {
   display: none;
 }
+
+#wrapper {
+  display: flex
+}

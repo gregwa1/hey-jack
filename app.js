@@ -9,12 +9,7 @@ var playerCard2;
 var dealerCard1;
 var dealerCard2;
 
-// Greeting the player
-const greet = () => {
-  let name = getInput("Welcome! Let's play a game. What's your name?");
-  console.log(name);
-  return name;
-}
+
 
 //Shuffling Deck
 window.addEventListener('load', async function () {
@@ -35,7 +30,7 @@ let dealCards = async (cards) => {
   titleDealer.style = `display: block`;
 }
 
-//Getting deck_id
+//Making Player and Dealer disappear
 let titlePlayer = document.querySelector("#headingPlayer");
 let titleDealer = document.querySelector("#headingDealer");
 
@@ -46,6 +41,8 @@ let changeRank = (value) => {
     return 10;
   } else if (value === "ACE") {
     return 11;
+  } else if (value === "ACE" && value === "ACE") {
+    return 2;
   } else {
     return parseInt(value);
   }
