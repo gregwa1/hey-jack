@@ -4,10 +4,12 @@ const displayDealer = document.querySelector("#display-dealer");
 const results = document.querySelector("#results");
 let url = ``;
 let shuffleDeck;
-var playerCard1;
-var playerCard2;
-var dealerCard1;
-var dealerCard2;
+let playerCard1;
+let playerCard2;
+let dealerCard1;
+let dealerCard2;
+let playerHitScore;
+
 
 
 
@@ -21,14 +23,14 @@ window.addEventListener('load', async function () {
 let playButton = document.querySelector('#play');
 let hitButton = document.querySelector('#hit');
 let stayButton = document.querySelector('#stay');
-
+let playerCards = [];
+let dealerCards = [];
 //dealing cards. Changing two ACEs to the value of 2 if drawn in same user.
+
 const dealCards = async (cards) => {
   let response = await axios.get(`https://deckofcardsapi.com/api/deck/${shuffleDeck}/draw/?count=4`);
   let allCards = players(response.data.cards);
   console.log(allCards)
-  let playerCards = [];
-  let dealerCards = [];
   for (let i = 0; i < allCards.length; i += 1) {
     let currentCard = allCards[i]
     console.log(currentCard.value)
@@ -50,8 +52,9 @@ const dealCards = async (cards) => {
 //Making Player and Dealer disappear
 let titlePlayer = document.querySelector("#headingPlayer");
 let titleDealer = document.querySelector("#headingDealer");
-
 playButton.addEventListener(`click`, dealCards)
+
+
 
 
 //This function changes value of high suits to value 10.
@@ -100,17 +103,22 @@ const players = (cards) => {
   let playerScore = getTotal(playerCard1, playerCard2);
   let dealerScore = getTotal(dealerCard1, dealerCard2);
   if (playerScore === 21 && playerScore === dealerScore) {
-    let winner = document.createElement('div');
-    winner.innerHTML = `<h2>Player and dealer tie at 21. Dealer wins!</h2>`
-    results.append(winner);
+    let dealt = document.createElement('div');
+    dealt.innerHTML = `<h2>Player and dealer tie at 21. Dealer wins!</h2>`
+    results.append(dealt);
   } else if (playerScore > dealerScore) {
-    let winner = document.createElement('div')
-    winner.innerHTML = `<h2>Player wins with score of ${playerScore}</h2>`
-    results.append(winner);
+    let dealt = document.createElement('div')
+    dealt.innerHTML = `<h2>Player wins with score of ${playerScore}</h2>`
+    results.append(dealt);
   } else if (dealerScore > playerScore) {
-    let winner = document.createElement('div')
-    winner.innerHTML = `<h2>Dealer wins with score of ${dealerScore}</h2>`
-    results.append(winner);
+    let dealt = document.createElement('div')
+    dealt.innerHTML = `<h2>Dealer wins with score of ${dealerScore}</h2>`
+    results.append(dealt);
+  } else if (dealerScore === playerScore) {
+    let dealt = document.createElement('div')
+    dealt.innerHTML = `<h2>Dealer wins with score of ${dealerScore}</h2>`
+    results.append(dealt);
+
   }
 
   return cards
@@ -126,11 +134,43 @@ const determineWinner = (player1, player2) => {
     let cardValue = array[i].value;
     score += cardValue;
   }
-  return score
+  return score;
 }
 
 //Hit Button
-//The Player score continues by adding one random card 
-//from cards delt.If the cards exceed 21 then Bust!.
-//Player looses. If Player Player 
-//If 
+//The Player score continues by adding one random card from current deck.
+//If the cards exceed 21 then Bust!. "Player Looses. Sorry. Play again?"
+
+
+const hit = async (playerScore) => {
+  let response = await axios.get(`https://deckofcardsapi.com/api/deck/${shuffleDeck}/draw/?count=1`);
+  let otherCardValue = response.data.cards[0].value
+  let allCards = players(response.data.cards);
+  playerCards.push(allCards[0]);
+  dealerCards.push(allCards[0]);
+
+  checkOtherCard(playerCards);
+
+  titlePlayer.style = `display: block`;
+
+  let playerHitScore = playerScore
+  playerHitScore += otherCardValue
+  if (playerScore > 21) {
+    playerHitScore.innerHTML = `<h2>Dealer wins with score of ${playerHitScore}</h2>`
+  }
+
+
+}
+
+const checkOtherCard = (array) => {
+  for (let i = 0; i < array.length; i += 1) {
+    if (array[i].value === "ACE" && array[i + 1] === "ACE")
+      changeRank(array[i].value)
+  }
+
+}
+
+hitButton.addEventListener(`click`, hit)
+
+//Stay Button
+//Once Player presses, the Dealer will Hit IF Dealer score is 17 or under.
